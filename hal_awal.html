@@ -1,1 +1,875 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elements Harmony - Tiga Konsep</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #ff6b35;
+            --secondary-color: #4ecdc4;
+            --accent-color: #ffd166;
+            --background-color: #1a1a2e;
+            --text-color: #ffffff;
+            --transition-speed: 0.5s;
+        }
 
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--background-color);
+            color: var(--text-color);
+            transition: all var(--transition-speed) ease;
+            overflow-x: hidden;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        /* Mode 1: Gradasi Api Es */
+        body.fire-ice-mode {
+            --primary-color: #ff6b35;
+            --secondary-color: #4ecdc4;
+            --accent-color: #ffd166;
+            --text-color: #ffffff;
+        }
+
+        /* Mode 2: Suasana Sore Hari */
+        body.sunset-mode {
+            --primary-color: #ff7e5f;
+            --secondary-color: #feb47b;
+            --accent-color: #ffcc67;
+            --text-color: #f5f5f5;
+        }
+
+        /* Mode 3: Kabut Pegunungan */
+        body.mist-mode {
+            --primary-color: #8e9eab;
+            --secondary-color: #eef2f3;
+            --accent-color: #a8b6c5;
+            --text-color: #e9ecef;
+        }
+
+        /* Blur effect when modal is active */
+        body.modal-active #main-content {
+            filter: blur(5px);
+            pointer-events: none;
+            user-select: none;
+        }
+
+        /* Navbar */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+            background-color: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            transition: all var(--transition-speed) ease;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo {
+            width: 50px;
+            height: 50px;
+            transition: transform 0.3s ease;
+            filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.3));
+        }
+
+        .logo:hover {
+            transform: scale(1.1);
+        }
+
+        .logo-text {
+            font-size: 1.8rem;
+            font-weight: bold;
+            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 10px rgba(255, 107, 53, 0.3);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-color);
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Mode Selector */
+        .mode-selector {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .mode-btn {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: var(--text-color);
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .mode-btn.active {
+            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+            color: white;
+            box-shadow: 0 0 15px rgba(255, 107, 53, 0.5);
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 80vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            opacity: 0.1;
+            z-index: -1;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            animation: fadeIn 1s ease;
+            text-shadow: 0 0 20px rgba(255, 107, 53, 0.3);
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin-bottom: 2rem;
+            animation: fadeIn 1.5s ease;
+        }
+
+        .continue-btn {
+            padding: 12px 30px;
+            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+            border: none;
+            border-radius: 30px;
+            color: white;
+            font-weight: bold;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            animation: fadeIn 2s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .continue-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+        }
+
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+            font-size: 2.5rem;
+            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .cards-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border-radius: 15px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Element Animations */
+        .fire-animation, .ice-animation, .sunset-animation, .mist-animation {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: -2;
+            opacity: 0;
+            transition: opacity var(--transition-speed) ease;
+        }
+
+        body.fire-ice-mode .fire-animation,
+        body.fire-ice-mode .ice-animation {
+            opacity: 0.2;
+        }
+
+        body.sunset-mode .sunset-animation {
+            opacity: 0.3;
+        }
+
+        body.mist-mode .mist-animation {
+            opacity: 0.3;
+        }
+
+        .fire-particle, .ice-particle, .sunset-particle, .mist-particle {
+            position: absolute;
+            border-radius: 50%;
+            animation: float 15s infinite linear;
+        }
+
+        .fire-particle {
+            background: radial-gradient(circle, var(--primary-color), transparent);
+            box-shadow: 0 0 20px var(--primary-color);
+        }
+
+        .ice-particle {
+            background: radial-gradient(circle, var(--secondary-color), transparent);
+            box-shadow: 0 0 20px var(--secondary-color);
+        }
+
+        .sunset-particle {
+            background: radial-gradient(circle, var(--primary-color), transparent);
+            box-shadow: 0 0 20px var(--primary-color);
+        }
+
+        .mist-particle {
+            background: radial-gradient(circle, var(--secondary-color), transparent);
+            box-shadow: 0 0 20px var(--secondary-color);
+        }
+
+        /* Account Modal */
+        .account-modal {
+            position: fixed;
+            top: 0;
+            right: -50%;
+            width: 50%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            transition: right var(--transition-speed) ease;
+            display: flex;
+            flex-direction: column;
+            box-shadow: -5px 0 15px rgba(0, 0, 0, 0.5);
+        }
+
+        .account-modal.active {
+            right: 0;
+        }
+
+        .modal-content {
+            background-color: var(--card-bg);
+            padding: 2rem;
+            height: 100%;
+            overflow-y: auto;
+            border-left: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .modal-header h2 {
+            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            font-size: 1.8rem;
+        }
+
+        .close-modal {
+            background: none;
+            border: none;
+            color: var(--text-color);
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            padding: 5px;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .close-modal:hover {
+            transform: scale(1.2);
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .account-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .profile-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            background-color: rgba(0, 0, 0, 0.2);
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .profile-picture {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid;
+            border-image: linear-gradient(to right, var(--primary-color), var(--secondary-color)) 1;
+            margin-bottom: 1rem;
+        }
+
+        .profile-name {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .profile-bio {
+            text-align: center;
+            opacity: 0.8;
+            margin-bottom: 1rem;
+            line-height: 1.5;
+        }
+
+        .profile-stats {
+            display: flex;
+            justify-content: space-around;
+            width: 100%;
+            margin-bottom: 1rem;
+        }
+
+        .stat {
+            text-align: center;
+            padding: 0.5rem;
+        }
+
+        .stat-value {
+            font-size: 1.2rem;
+            font-weight: bold;
+            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .stat-label {
+            font-size: 0.8rem;
+            opacity: 0.7;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .form-group label {
+            font-weight: 500;
+            font-size: 1rem;
+        }
+
+        .form-group input, .form-group textarea, .form-group select {
+            padding: 12px 15px;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            background-color: rgba(0, 0, 0, 0.3);
+            color: var(--text-color);
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus, .form-group textarea:focus, .form-group select:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 2px rgba(255, 107, 53, 0.2);
+        }
+
+        .form-group textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .form-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 1rem;
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .form-btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+        }
+
+        .save-btn {
+            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+            color: white;
+        }
+
+        .save-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .cancel-btn {
+            background-color: rgba(255, 255, 255, 0.1);
+            color: var(--text-color);
+        }
+
+        .cancel-btn:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        /* Footer */
+        footer {
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 2rem;
+            text-align: center;
+            margin-top: 3rem;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .footer-links a {
+            color: var(--text-color);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--primary-color);
+        }
+
+        .copyright {
+            font-size: 0.9rem;
+            opacity: 0.7;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0) rotate(0deg); }
+            100% { transform: translateY(-1000px) rotate(360deg); }
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .account-modal {
+                width: 70%;
+                right: -70%;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .nav-links {
+                gap: 1rem;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .mode-selector {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .account-modal {
+                width: 85%;
+                right: -85%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .account-modal {
+                width: 100%;
+                right: -100%;
+            }
+            
+            .profile-stats {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .form-actions {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body class="fire-ice-mode">
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="logo-container">
+            <img id="logo-img" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cGF0aCBmaWxsPSIjZmY2YjM1IiBkPSJNMjU2IDQ4QzE0MS4xIDQ4IDQ4IDE0MS4xIDQ4IDI1NnM5My4xIDIwOCAyMDggMjA4IDIwOC05My4xIDIwOC0yMDhTMzcwLjkgNDggMjU2IDQ4em0wIDM4NGMtOTcuMiAwLTE3Ni03OC44LTE3Ni0xNzZzNzguOC0xNzYgMTc2LTE3NiAxNzYgNzguOCAxNzYgMTc2LTc4LjggMTc2LTE3NiAxNzZ6Ii8+PHBhdGggZmlsbD0iIzRlY2RjNCIgZD0iTTM1MiAyNTZjMCA1My0xMDYgOTYtOTYgOTZzLTk2LTQzLTk2LTk2IDEwNi05NiA5Ni05NiA5NiA0MyA5NiA5NnoiLz48cGF0aCBmaWxsPSIjZmY5YTNjIiBkPSJNMjU2IDE2MGMtNTMgMC05NiA0My05NiA5NnM0MyA5NiA5NiA5NiA5Ni00MyA5Ni05Ni00My05Ni05Ni05NnptMCAxNjBjLTM1LjMgMC02NC0yOC43LTY0LTY0czI4LjctNjQgNjQtNjQgNjQgMjguNyA2NCA2NC0yOC43IDY0LTY0IDY0eiIvPjwvc3ZnPg==" alt="Elements Harmony Logo" class="logo">
+            <span class="logo-text">Elements Harmony</span>
+        </div>
+        <ul class="nav-links">
+            <li><a href="#"><i class="fas fa-home"></i> Beranda</a></li>
+            <li><a href="#"><i class="fas fa-info-circle"></i> Tentang</a></li>
+            <li><a href="#" id="account-link"><i class="fas fa-user"></i> Akun</a></li>
+        </ul>
+        <div class="mode-selector">
+            <button class="mode-btn active" data-mode="fire-ice"><i class="fas fa-fire"></i><i class="fas fa-snowflake"></i> Api & Es</button>
+            <button class="mode-btn" data-mode="sunset"><i class="fas fa-sun"></i> Sore Hari</button>
+            <button class="mode-btn" data-mode="mist"><i class="fas fa-mountain"></i> Kabut</button>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div id="main-content">
+        <!-- Hero Section -->
+        <section class="hero">
+            <h1>Harmoni Tiga Konsep</h1>
+           
+              <a href="masuk.html" class="continue-btn" target="_blank">Jelajahi Sekarang</a>
+            <div class="fire-animation" id="fire-animation"></div>
+            <div class="ice-animation" id="ice-animation"></div>
+            <div class="sunset-animation" id="sunset-animation"></div>
+            <div class="mist-animation" id="mist-animation"></div>
+        </section>
+
+        <!-- Content Section -->
+      
+
+        <!-- Footer -->
+        <footer>
+            <div class="footer-content">
+                <div class="footer-links">
+                    <a href="#">Beranda</a>
+                    <a href="#">Tentang</a>
+                    <a href="#">Kontak</a>
+                    <a href="#">Kebijakan Privasi</a>
+                </div>
+                <p class="copyright">© 2023 Elements Harmony. Semua hak dilindungi.</p>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Account Modal -->
+    <div class="account-modal" id="account-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Profil Pengguna</h2>
+                <button class="close-modal" id="close-modal">&times;</button>
+            </div>
+            <div class="profile-section">
+                <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyMDAgMjAwIj48Y2lyY2xlIGN4PSIxMDAiIGN5PSI4MCIgcj0iNDAiIGZpbGw9IiM0ZWNkYzQiLz48cGF0aCBkPSJNMTYwIDE4MGMwLTMzLjEtMjYuOS02MC02MC02MHMtNjAgMjYuOS02MCA2MGgxMjB6IiBmaWxsPSIjZmY5YTNjIi8+PC9zdmc+" alt="Profile Picture" class="profile-picture">
+                <div class="profile-name" id="profile-name">Harmoni User</div>
+                <div class="profile-bio" id="profile-bio">Pencinta keindahan alam dan harmoni elemen. Menikmati setiap perubahan tema dengan rasa syukur.</div>
+                <div class="profile-stats">
+                    <div class="stat">
+                        <div class="stat-value">42</div>
+                        <div class="stat-label">Tema Dicoba</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-value">89%</div>
+                        <div class="stat-label">Aktif</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-value">Elite</div>
+                        <div class="stat-label">Tingkat</div>
+                    </div>
+                </div>
+            </div>
+            <form class="account-form">
+                <div class="form-group">
+                    <label for="username">Nama Pengguna</label>
+                    <input type="text" id="username" value="HarmoniUser">
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" value="harmoni.user@example.com">
+                </div>
+                <div class="form-group">
+                    <label for="bio">Bio</label>
+                    <textarea id="bio">Pencinta keindahan alam dan harmoni elemen. Menikmati setiap perubahan tema dengan rasa syukur.</textarea>
+                </div>
+                <div class="form-group">
+                    <label for="theme">Tema Favorit</label>
+                    <select id="theme">
+                        <option value="fire-ice">Api & Es</option>
+                        <option value="sunset">Sore Hari</option>
+                        <option value="mist">Kabut Pegunungan</option>
+                    </select>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="form-btn cancel-btn" id="cancel-changes">Batal</button>
+                    <button type="button" class="form-btn save-btn">Simpan Perubahan</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Mode Selector
+        const modeButtons = document.querySelectorAll('.mode-btn');
+        const body = document.body;
+        const mainContent = document.getElementById('main-content');
+        const logoImg = document.getElementById('logo-img');
+        
+        // Logo untuk masing-masing mode
+        const logos = {
+            'fire-ice': "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cGF0aCBmaWxsPSIjZmY2YjM1IiBkPSJNMjU2IDQ4QzE0MS4xIDQ4IDQ4IDE0MS4xIDQ4IDI1NnM5My4xIDIwOCAyMDggMjA4IDIwOC05My4xIDIwOC0yMDhTMzcwLjkgNDggMjU2IDQ4em0wIDM4NGMtOTcuMiAwLTE3Ni03OC44LTE3Ni0xNzZzNzguOC0xNzYgMTc2LTE3NiAxNzYgNzguOCAxNzYgMTc2LTc4LjggMTc2LTE3NiAxNzZ6Ii8+PHBhdGggZmlsbD0iIzRlY2RjNCIgZD0iTTM1MiAyNTZjMCA1My0xMDYgOTYtOTYgOTZzLTk2LTQzLTk2LTk2IDEwNi05NiA5Ni05NiA5NiA0MyA5NiA5NnoiLz48cGF0aCBmaWxsPSIjZmY5YTNjIiBkPSJNMjU2IDE2MGMtNTMgMC05NiA0My05NiA5NnM0MyA5NiA5NiA5NiA5Ni00MyA5Ni05Ni00My05Ni05Ni05NnptMCAxNjBjLTM1LjMgMC02NC0yOC43LTY0LTY0czI4LjctNjQgNjQtNjQgNjQgMjguNyA2NCA2NC0yOC43IDY0LTY0IDY0eiIvPjwvc3ZnPg==",
+            'sunset': "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cGF0aCBmaWxsPSIjZmY3ZTVmIiBkPSJNMjU2IDQ4QzE0MS4xIDQ4IDQ4IDE0MS4xIDQ4IDI1NnM5My4xIDIwOCAyMDggMjA4IDIwOC05My4xIDIwOC0yMDhTMzcwLjkgNDggMjU2IDQ4em0wIDM4NGMtOTcuMiAwLTE3Ni03OC44LTE3Ni0xNzZzNzguOC0xNzYgMTc2LTE3NiAxNzYgNzguOCAxNzYgMTc2LTc4LjggMTc2LTE3NiAxNzZ6Ii8+PHBhdGggZmlsbD0iI2ZlYjQ3YiIgZD0iTTM1MiAyNTZjMCA1My0xMDYgOTYtOTYgOTZzLTk2LTQzLTk2LTk2IDEwNi05NiA5Ni05NiA5NiA0MyA5NiA5NnoiLz48cGF0aCBmaWxsPSIjZmZjYzY3IiBkPSJNMjU2IDE2MGMtNTMgMC05NiA0My05NiA5NnM0MyA5NiA5NiA5NiA5Ni00MyA5Ni05Ni00My05Ni05Ni05NnptMCAxNjBjLTM1LjMgMC02NC0yOC43LTY0LTY0czI4LjctNjQgNjQtNjQgNjQgMjguNyA2NCA2NC0yOC43IDY0LTY0IDY0eiIvPjwvc3ZnPg==",
+            'mist': "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cGF0aCBmaWxsPSIjOGU5ZWFiIiBkPSJNMjU2IDQ4QzE0MS4xIDQ4IDQ4IDE0MS4xIDQ4IDI1NnM5My4xIDIwOCAyMDggMjA4IDIwOC05My4xIDIwOC0yMDhTMzcwLjkgNDggMjU2IDQ4em0wIDM4NGMtOTcuMiAwLTE3Ni03OC44LTE3Ni0xNzZzNzguOC0xNzYgMTc2LTE3NiAxNzYgNzguOCAxNzYgMTc2LTc4LjggMTc2LTE3NiAxNzZ6Ii8+PHBhdGggZmlsbD0iI2VlZjJmMyIgZD0iTTM1MiAyNTZjMCA1My0xMDYgOTYtOTYgOTZzLTk2LTQzLTk2LTk2IDEwNi05NiA5Ni05NiA5NiA0MyA5NiA5NnoiLz48cGF0aCBmaWxsPSIjYThiNmM1IiBkPSJNMjU2IDE2MGMtNTMgMC05NiA0My05NiA5NnM0MyA5NiA5NiA5NiA5Ni00MyA5Ni05Ni00My05Ni05Ni05NnptMCAxNjBjLTM1LjMgMC02NC0yOC43LTY0LTY0czI4LjctNjQgNjQtNjQgNjQgMjguNyA2NCA2NC0yOC43IDY0LTY0IDY0eiIvPjwvc3ZnPg=="
+        };
+        
+        modeButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const mode = button.getAttribute('data-mode');
+                
+                // Update active button
+                modeButtons.forEach(btn => btn.classList.remove('active'));
+                button.classList.add('active');
+                
+                // Update body class with transition
+                body.style.transition = 'all 0.5s ease';
+                body.className = `${mode}-mode`;
+                
+                // Update logo
+                logoImg.src = logos[mode];
+                
+                // Update theme in account modal
+                document.getElementById('theme').value = mode;
+                
+                // Create particles for the new mode
+                createParticles();
+            });
+        });
+        
+        // Account Modal
+        const accountLink = document.getElementById('account-link');
+        const accountModal = document.getElementById('account-modal');
+        const closeModal = document.getElementById('close-modal');
+        const cancelChanges = document.getElementById('cancel-changes');
+        
+        accountLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            accountModal.classList.add('active');
+            body.classList.add('modal-active');
+        });
+        
+        closeModal.addEventListener('click', () => {
+            accountModal.classList.remove('active');
+            body.classList.remove('modal-active');
+        });
+        
+        cancelChanges.addEventListener('click', () => {
+            accountModal.classList.remove('active');
+            body.classList.remove('modal-active');
+        });
+        
+        // Close modal when clicking outside (only if clicking on the overlay)
+        accountModal.addEventListener('click', (e) => {
+            if (e.target === accountModal) {
+                accountModal.classList.remove('active');
+                body.classList.remove('modal-active');
+            }
+        });
+        
+        // Create particles for background animation
+        function createParticles() {
+            const fireAnimation = document.getElementById('fire-animation');
+            const iceAnimation = document.getElementById('ice-animation');
+            const sunsetAnimation = document.getElementById('sunset-animation');
+            const mistAnimation = document.getElementById('mist-animation');
+            
+            // Clear existing particles
+            fireAnimation.innerHTML = '';
+            iceAnimation.innerHTML = '';
+            sunsetAnimation.innerHTML = '';
+            mistAnimation.innerHTML = '';
+            
+            // Create fire particles
+            for (let i = 0; i < 20; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('fire-particle');
+                
+                // Random properties
+                const size = Math.random() * 40 + 15;
+                const left = Math.random() * 100;
+                const animationDuration = Math.random() * 20 + 10;
+                
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                particle.style.left = `${left}%`;
+                particle.style.animationDuration = `${animationDuration}s`;
+                particle.style.animationDelay = `${Math.random() * 5}s`;
+                
+                fireAnimation.appendChild(particle);
+            }
+            
+            // Create ice particles
+            for (let i = 0; i < 20; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('ice-particle');
+                
+                // Random properties
+                const size = Math.random() * 40 + 15;
+                const left = Math.random() * 100;
+                const animationDuration = Math.random() * 20 + 10;
+                
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                particle.style.left = `${left}%`;
+                particle.style.animationDuration = `${animationDuration}s`;
+                particle.style.animationDelay = `${Math.random() * 5}s`;
+                
+                iceAnimation.appendChild(particle);
+            }
+            
+            // Create sunset particles
+            for (let i = 0; i < 25; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('sunset-particle');
+                
+                // Random properties
+                const size = Math.random() * 50 + 20;
+                const left = Math.random() * 100;
+                const animationDuration = Math.random() * 25 + 15;
+                
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                particle.style.left = `${left}%`;
+                particle.style.animationDuration = `${animationDuration}s`;
+                particle.style.animationDelay = `${Math.random() * 5}s`;
+                
+                sunsetAnimation.appendChild(particle);
+            }
+            
+            // Create mist particles
+            for (let i = 0; i < 30; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('mist-particle');
+                
+                // Random properties
+                const size = Math.random() * 60 + 25;
+                const left = Math.random() * 100;
+                const animationDuration = Math.random() * 30 + 20;
+                
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                particle.style.left = `${left}%`;
+                particle.style.animationDuration = `${animationDuration}s`;
+                particle.style.animationDelay = `${Math.random() * 5}s`;
+                
+                mistAnimation.appendChild(particle);
+            }
+        }
+        
+        // Initialize particles on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            createParticles();
+        });
+    </script>
+</body>
+</html>
